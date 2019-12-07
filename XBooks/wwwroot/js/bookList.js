@@ -21,7 +21,7 @@ function loadDataTable() {
                     return `
                             <div class="row  p-2">
                                 <a href="/BookList/Edit?id=${data}" class="btn btn-primary text-white col-3 offset-lg-3" style="cursor:pointer; ">Edit</a>
-                                <a href="/BookList/Edit?id=${data}" class="btn btn-danger text-white col-3 offset-lg-1" style="cursor:pointer; ">Delete</a>
+                                <a  class="btn btn-danger text-white col-3 offset-lg-1" style="cursor:pointer; " onclick=Delete('/api/book?id='+${data})>Delete</a>
                             </div>
                     `;
                 },
@@ -34,4 +34,31 @@ function loadDataTable() {
         },
         "width":"100%"
     })
+}
+
+function Delete(url) {
+    swal({
+        title: "Are you Sure?",
+        text: "Once deleted, you will not be able to recover",
+        icon: "warning",
+        buttons:true,
+        dangerMode: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function (data) {
+                    debugger;
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    });
 }
