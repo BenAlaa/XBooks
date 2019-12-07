@@ -41,8 +41,8 @@
                                 @Html.DisplayFor(m => book.ISBN)
                             </td>
                             <td>
-                                <button class="btn btn-danger btn-sm text-white">Delete</button>
-                                <a class="btn btn-primary btn-sm text-white">Edit</a>
+                                <button asp-page-handler="Delete" asp-route-id="@book.Id" onclick="return confirm('Are you sure you want to delete this Book?')" class="btn btn-danger btn-sm text-white">Delete</button>
+                                <a asp-page="Edit" asp-route-id="@book.Id" class="btn btn-primary btn-sm text-white">Edit</a>
                             </td>
                         </tr>
                     }
